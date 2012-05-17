@@ -1,0 +1,27 @@
+{
+  "author": "Jake Luer <jake@alogicalparadox.com>",
+  "name": "electron",
+  "description": "Event-based tiny CLI famework.",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/logicalparadox/electron.git"
+  },
+  "main": "./index",
+  "scripts": {
+    "test": "make test"
+  },
+  "dependencies": {
+      "drip": "0.2.x"
+    , "optimist": "0.3.x"
+  },
+  "devDependencies": {
+      "mocha": "*"
+    , "chai": "*"
+    , "chai-spies": "*"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
