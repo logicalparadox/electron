@@ -3,6 +3,7 @@ var electron = require('..')
 
 program
   .name('Electron Testing')
+  .desc('https://github.com/logicalparadox/electron')
   .version(electron.version);
 
 program
@@ -23,4 +24,4 @@ program
     console.log(cmd + ' is not a valid command. Try --help for a list.');
   });
 
-program.parse(process.argv);
+program.parse();
