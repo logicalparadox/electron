@@ -221,6 +221,22 @@ describe('program', function () {
       spy.should.have.been.called.once;
     });
 
+    it('can use a wildcard command', function () {
+      var program = electron('test')
+        , spy = chai.spy(function (args) {
+            args.should.be.instanceof(Args);
+            args.commands[1].should.equal('universe');
+          });
+
+      program
+        .command('hello *')
+        .action(spy);
+
+      var subject = 'node test.js hello universe'.split(' ');
+      program.parse(subject);
+      spy.should.have.been.called.once;
+    });
+
   });
 
   describe('help', function () {

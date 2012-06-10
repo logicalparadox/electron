@@ -99,7 +99,15 @@ describe('argv parsing', function () {
 
   describe('commands', function () {
 
-    it('can parse commands', function () {
+    it('can parse single commands', function () {
+      var subject = 'node test.js hello'.split(' ')
+        , argv = electron.argv(subject);
+      argv.commands.should.be.an('array');
+      argv.commands.should.have.length(1);
+      argv.commands.should.include('hello');
+    });
+
+    it('can parse multiple commands', function () {
       var subject = 'node test.js one two'.split(' ')
         , argv = electron.argv(subject);
       argv.commands.should.be.an('array');
@@ -130,12 +138,23 @@ describe('argv parsing', function () {
       argv._raw.should.be.an('array')
         .and.deep.equal(subject);
 
+      argv.mode('r').should.be.true;
+      argv.mode('g').should.be.true;
+      argv.mode('b').should.be.true;
+
+      argv.param('hello').should.equal('universe');
+      argv.param('say').should.equal('goodday');
+
+      argv.command('command').should.be.true;
+      argv.command('subcommand').should.be.true;
+
       argv.modes.should.be.an('array')
         .and.include('r', 'g', 'b');
       argv.commands.should.be.an('array')
         .and.include('command', 'subcommand');
       argv.params.should.be.an('object')
         .and.deep.equal({ hello: 'universe', say: 'goodday' });
+
     });
 
     it('can parse unsane mixed set of args', function () {
@@ -144,6 +163,16 @@ describe('argv parsing', function () {
 
       argv._raw.should.be.an('array')
         .and.deep.equal(subject);
+
+      argv.mode('r').should.be.true;
+      argv.mode('g').should.be.true;
+      argv.mode('b').should.be.true;
+
+      argv.param('hello').should.equal('universe');
+      argv.param('say').should.equal('goodday');
+
+      argv.command('command').should.be.true;
+      argv.command('subcommand').should.be.true;
 
       argv.modes.should.be.an('array')
         .and.include('r', 'g', 'b');
