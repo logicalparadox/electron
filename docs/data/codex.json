@@ -1,0 +1,30 @@
+{
+    "locals": {
+      "title": "Electron"
+    }
+
+  , "plugins": [
+    { "name": "code"
+    , "files": [
+          { "name": "index"
+          , "title": "Electron Argument Parsing"
+          , "file": "../../lib/electron/args.js"
+          , "description": ":)"
+          , "template": "index"
+          , "render-file": false }
+        , { "name": "index"
+          , "title": "Electron Program Framework"
+          , "file": "../../lib/electron/program.js"
+          , "description": ":)"
+          , "template": "index"
+          , "render-file": false }
+        , { "name": "index"
+          , "title": "Electron Command Construction"
+          , "file": "../../lib/electron/command.js"
+          , "description": ":)"
+          , "template": "index"
+          , "render-file": false }
+      ]
+    }
+  ]
+}

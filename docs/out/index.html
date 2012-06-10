@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Electron</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script src="/public/js/main.js"></script>
+    <link rel="stylesheet" href="/public/css/main.css" type="text/css" media="all">
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Electron</h1>
+        <nav>
+          <div id="installation" class="head"> <a href="#header-installation" class="scroll">Installation</a></div>
+          <div id="argument_parsing" class="head"><a href="#header-argument_parsing" class="scroll">Argument Parsing</a></div>
+          <div id="command" class="section argument_parsing"><a href="#argument_parsing-command" class="scroll">command</a></div>
+          <div id="mode" class="section argument_parsing"><a href="#argument_parsing-mode" class="scroll">mode</a></div>
+          <div id="param" class="section argument_parsing"><a href="#argument_parsing-param" class="scroll">param</a></div>
+          <div id="defaults" class="section "><a href="#-defaults" class="scroll">defaults</a></div>
+          <div id="program_framework" class="head"><a href="#header-program_framework" class="scroll">Program Framework</a></div>
+          <div id="command" class="section program_framework"><a href="#program_framework-command" class="scroll">command</a></div>
+          <div id="parse" class="section program_framework"><a href="#program_framework-parse" class="scroll">parse</a></div>
+          <div id="name" class="section program_framework"><a href="#program_framework-name" class="scroll">name</a></div>
+          <div id="version" class="section program_framework"><a href="#program_framework-version" class="scroll">version</a></div>
+          <div id="desc" class="section program_framework"><a href="#program_framework-desc" class="scroll">desc</a></div>
+          <div id="cwd" class="section program_framework"><a href="#program_framework-cwd" class="scroll">cwd</a></div>
+          <div id="theme" class="section program_framework"><a href="#program_framework-theme" class="scroll">theme</a></div>
+          <div id="colorize" class="section program_framework"><a href="#program_framework-colorize" class="scroll">colorize</a></div>
+          <div id="constructing_commands" class="head"><a href="#header-constructing_commands" class="scroll">Constructing Commands</a></div>
+          <div id="desc" class="section constructing_commands"><a href="#constructing_commands-desc" class="scroll">desc</a></div>
+          <div id="option" class="section constructing_commands"><a href="#constructing_commands-option" class="scroll">option</a></div>
+          <div id="action" class="section constructing_commands"><a href="#constructing_commands-action" class="scroll">action</a></div>
+        </nav>
+      </header>
+      <section id="content">
+        <div id="header-installation" class="segment">
+          <div class="description"><blockquote>
+<p>A tiny cli framework for node.js.
+
+</p>
+</blockquote>
+<h2>Features</h2>
+<ul>
+<li>tbd</li>
+</ul>
+<h2>Installation</h2>
+<h5>Node</h5>
+<p><code>electron</code> package is available through <a href="http://npmjs.org">npm</a>.
+
+</p>
+<pre><code class="lang-bash">npm install electron</code></pre>
+</div>
+        </div>
+        <div id="header-argument_parsing" class="segment">
+          <div class="summary"><h2>Argument Parsing</h2>
+</div>
+          <ul class="tags">
+          </ul>
+          <div class="description"><p>The electron argument parser takes the node.js standard
+<code>process.argv</code> array and constructs an object with helpers
+that can easily be queried. This helper is publicly exposed
+so it can be used independant of the cli framework.
+
+</p>
+<pre><code><span class="keyword">var</span> electron = require(<span class="string">'electron'</span>)
+  , argv = electron.argv(process.argv);</code></pre>
+<p>When constructed, the electron argv parser recognizes three
+types command line arguments: <em>commands</em>, <em>modes</em>, and <em>parameters</em>.
+
+</p>
+<p>Each of these types also has a helper that will provide quick access
+to whether a <em>command</em> or <em>mode</em> is present, or the value of a <em>parameter</em>.
+
+</p>
+<h5>Commands</h5>
+<p>Commands are the simplest of arguments. They are any arguments
+that are listed to that do not start with the <code>-</code> prefix. Essentially,
+they are a list of keys.
+
+</p>
+<pre><code><span class="comment">// $ node cli.js hello universe</span>
+argv.commands === [ <span class="string">'hello'</span>, <span class="string">'universe'</span> ];</code></pre>
+<h5>Modes</h5>
+<p>Modes are also a non-value list of keys, but they can be expressed
+differently by using the <code>-</code> or <code>--</code> prefix. When using modes, if
+it begins with a single <code>-</code>, each letter will be parsed as its own mode.
+
+</p>
+<pre><code><span class="comment">// $ node cli.js --universe -abc</span>
+argv.modes === [ <span class="string">'universe'</span>, <span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span> ];</code></pre>
+<h5>Parameters</h5>
+<p>Paremeters are key:value pairs that are declared in a similiar manner
+as modes. They can be declared in any of the following ways.
+
+</p>
+<pre><code><span class="comment">// $ node cli.js --noun unverse -v say --topic=hello -w=now</span>
+argv.params === {
+    noun: <span class="string">'universe'</span>
+  , v: <span class="string">'say'</span>
+  , topic: <span class="string">'hello'</span>
+  , w: <span class="string">'now'</span>
+};</code></pre>
+</div>
+        </div>
+        <div id="argument_parsing-command" class="segment">
+          <div class="summary"><h3>.command (cmd, [cmd], [...])</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">command(s)</span><span class="desc">to check</span></li>
+          </ul>
+          <div class="description"><p>The <code>command</code> helper takes a list of commands and will
+return <code>true</code> if any of them exist in the <em>commands</em> list.
+
+</p>
+<pre><code><span class="comment">// node cli.js hello universe</span>
+<span class="keyword">var</span> greeting = argv.command(<span class="string">'hi'</span>, <span class="string">'hello'</span>) <span class="comment">// true</span>
+  , world = argv.command(<span class="string">'world'</span>, <span class="string">'earth'</span>); <span class="comment">// false</span></code></pre>
+</div>
+        </div>
+        <div id="argument_parsing-mode" class="segment">
+          <div class="summary"><h3>.mode (mode, [mode], [...])</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">mode(s)</span><span class="desc">to check</span></li>
+          </ul>
+          <div class="description"><p>The <code>mode</code> helper takes a list of modes and will
+return <code>true</code> if any of them exist in the <em>modes</em> list.
+
+</p>
+<pre><code><span class="comment">// node cli.js --hello -abc</span>
+<span class="keyword">var</span> greeting = argv.mode(<span class="string">'h'</span>, <span class="string">'hello'</span>) <span class="comment">// true</span>
+  , world = argv.mode(<span class="string">'w'</span>, <span class="string">'world'</span>); <span class="comment">// false</span></code></pre>
+</div>
+        </div>
+        <div id="argument_parsing-param" class="segment">
+          <div class="summary"><h3>.param (param, [param], [...])</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">mode(s)</span><span class="desc">to check</span></li>
+          </ul>
+          <div class="description"><p>The <code>param</code> helper takes a list of parameters and will
+return the value of the first parameter that matches, or
+<code>null</code> if none of the parameters exist in the <em>params</em> list.
+
+</p>
+<pre><code><span class="comment">// node cli.js --hello universe</span>
+<span class="keyword">var</span> greeting = argv.param(<span class="string">'h'</span>, <span class="string">'hello'</span>) <span class="comment">// 'universe'</span>
+  , world = argv.param(<span class="string">'w'</span>, <span class="string">'world'</span>); <span class="comment">// null</span></code></pre>
+</div>
+        </div>
+        <div id="header-program_framework" class="segment">
+          <div class="summary"><h2>Program Framework</h2>
+</div>
+          <ul class="tags">
+          </ul>
+          <div class="description"></div>
+        </div>
+        <div id="program_framework-command" class="segment">
+          <div class="summary"><h3>.command (name)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">command</span><span class="desc">name</span></li>
+          </ul>
+          <div class="description"><p>The most important aspect of an application is defining
+the different commands that can be executed for it. Some
+people prefer a CLI tool that does one thing based on a
+set of options. Others prefer a command line tool that
+can pivot based on a command string. Electron supports both.
+
+</p>
+<p>When using the <code>command</code> method, it will return a constructed
+command object with a different set of methods for chaining.
+Please read the &quot;Constructing Commands&quot; section for all available
+chainable methods and their respective purpose.
+
+</p>
+<h5>Single Command</h5>
+<p>As you understand how Electron parses command-line options,
+you know that a command is any option that does
+not start with <code>-</code> or <code>--</code>. Therefor, a single-command electron
+application is one that does not require any <code>commands</code>, but
+will execute a single action. Best demonstrated...
+
+</p>
+<pre><code>$ node app.js -p <span class="number">8080</span></code></pre>
+<p>In the case of single-command applications, we will define
+a <code>default</code> command for electron to run.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'default'</span>)
+  .action(<span class="function"><span class="keyword">function</span> <span class="params">(argv)</span> {</span>
+    <span class="keyword">var</span> port = argv.param(<span class="string">'p'</span>, <span class="string">'port'</span>);
+    <span class="comment">// something cool</span>
+  });</code></pre>
+<p>The <code>default</code> command will run when no commands are passed in,
+but it will not run if a command is provided.
+
+</p>
+<h5>Multiple Commands</h5>
+<p>You can also create many different commands for your application
+based on a simple string. These can be used in conjunction
+with <code>default</code> if you would like.
+
+</p>
+<pre><code>$ node app.js hello --universe</code></pre>
+<p>In this case we want to only run an action when the comamnd
+<code>hello</code> is present. This can easily be achieved.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'hello'</span>)
+  .action(fn);</code></pre>
+<p>There are also cases where you might want to have multipe layers
+of commands.
+
+</p>
+<pre><code>$ node app.js hello universe</code></pre>
+<p>Using the same mechanism, we can easily define this action.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'hello universe'</span>)
+  .action(fn);</code></pre>
+<p>One final option to explore with multiple commands is wildcards.
+Wildcards can exist at any level in a multi-word command, but they
+only work for entire words, not substrings.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'hello *'</span>)
+  .action(<span class="function"><span class="keyword">function</span> <span class="params">(argv)</span> {</span>
+    <span class="keyword">var</span> where = argv.commands[<span class="number">1</span>];
+  });</code></pre>
+<p>Would respond for any command starting with <code>hello</code> and is two
+commands long, such as...
+
+</p>
+<pre><code>$ node app.js hello world
+$ node app.js hello universe</code></pre>
+<h5>Absent Commands</h5>
+<p>Should you want to notify your users when they attempt to use
+a command is not support, you may use the <code>absent</code> command. This
+is also useful if you want to have a single command app but
+support a list of items as &quot;options&quot;, such as a list of files or
+directories.
+
+</p>
+<pre><code>$ node build.js file1.js files2.js
+
+program
+  .command(<span class="string">'absent'</span>)
+  .action(<span class="function"><span class="keyword">function</span> <span class="params">(argv)</span> {</span>
+    <span class="keyword">var</span> files = argv.commands.slice(<span class="number">0</span>);
+    <span class="comment">// something cool</span>
+  });</code></pre>
+</div>
+        </div>
+        <div id="program_framework-parse" class="segment">
+          <div class="summary"><h3>.parse (process.argv)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; Array &#125;</span><span class="name">process.argv</span><span class="desc">or compable array</span></li>
+          </ul>
+          <div class="description"><p>The <code>parse</code> method will initiate the program with
+selection of arguments and run a matching action. It
+should be used once all commands and settings have
+been propogated.
+
+</p>
+<pre><code>program.parse();
+program.parse(process.argv);
+program.parse([ <span class="string">'node'</span>, <span class="string">'app.js'</span>, <span class="string">'--hello'</span>, <span class="string">'--universe'</span> ]);</code></pre>
+<p>If no parameter is provided, <code>parse</code> will default to using
+the current processes <code>process.argv</code> array. You may alse
+provide your own array of commands if you like. Note that
+argv parsing expectes the first item to be the executing program
+and the second argument to be the script (as is with all node argv).
+These will be discarded.
+</p>
+</div>
+        </div>
+        <div id="program_framework-name" class="segment">
+          <div class="summary"><h3>.name (name)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">formal</span><span class="desc">name</span></li>
+          </ul>
+          <div class="description"><p>Provide a formal name to be used when displaying
+the help for the given program. Returns the program
+for chaining.
+
+</p>
+<pre><code>program.name(<span class="string">'Electron Framework'</span>);</code></pre>
+</div>
+        </div>
+        <div id="program_framework-version" class="segment">
+          <div class="summary"><h3>.version (version)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">application</span><span class="desc">version</span></li>
+          </ul>
+          <div class="description"><p>Provide a program version to be used when displaying
+the version for the given program. Returns the program
+for chaining.
+
+</p>
+<pre><code>program.version(electron.version);</code></pre>
+</div>
+        </div>
+        <div id="program_framework-desc" class="segment">
+          <div class="summary"><h3>.desc (description)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">application</span><span class="desc">description</span></li>
+          </ul>
+          <div class="description"><p>Provide a program discription to be used when displaying
+the the help for the given program. Returns the program
+for chaining.
+
+</p>
+<pre><code>program.desc(<span class="string">'https://github.com/logicalparadox/electron'</span>);</code></pre>
+</div>
+        </div>
+        <div id="program_framework-cwd" class="segment">
+          <div class="summary"><h3>.cwd (fqp)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">fully</span><span class="desc">quialified path</span></li>
+          </ul>
+          <div class="description"><p>Provide an alternative current working directory to be
+passed as part of the <code>argv</code> parameter to the action that has
+been executed. Returns the program for chaining.
+
+</p>
+<pre><code><span class="comment">// set</span>
+program.cwd(__dirname);
+
+<span class="comment">// get</span>
+program
+  .command(<span class="string">'universe'</span>)
+  .action(<span class="function"><span class="keyword">function</span> <span class="params">(argv)</span> {</span>
+    <span class="keyword">var</span> cwd = argv.cwd;
+    <span class="comment">// something cool</span>
+  });</code></pre>
+</div>
+        </div>
+        <div id="program_framework-theme" class="segment">
+          <div class="summary"><h3>.theme (theme, specifications)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String | Function &#125;</span><span class="name">name</span><span class="desc">of electron theme or custom function</span></li>
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; Object &#125;</span><span class="name">options</span><span class="desc">for electron themes</span></li>
+          </ul>
+          <div class="description"><p>You may change the appearance of the <code>--help</code> using
+a simple theming mechanism. Electron comes bundled with
+two themes. Each theme also supports minor tweaks. Returns
+the program for chaining.
+
+</p>
+<h5>clean (default)</h5>
+<p>A colorful and verbose theme useful for multi-command applications.
+
+</p>
+<pre><code>program
+  .theme(<span class="string">'clean'</span>, {
+      noColor: <span class="literal">false</span> <span class="comment">// set to true to disable color coding</span>
+    , prefix: <span class="string">''</span> <span class="comment">// prefix written before each line, such as 'help:'</span>
+  });</code></pre>
+<p><img alt="Electron Clean Theme" src="http://f.cl.ly/items/10283V3e2o1R0f2d2x32/electron-clean-theme.png" />
+
+</p>
+<h5>simple</h5>
+<p>An &quot;options only&quot; theme useful for single command applications.
+
+</p>
+<pre><code>program
+  .theme(<span class="string">'simple'</span>, {
+      noColor: <span class="literal">false</span> <span class="comment">// set to true to disable color coding</span>
+    , command: <span class="string">'default'</span> <span class="comment">// which command to show options for</span>
+    , usage: <span class="string">'&lt;options>'</span> <span class="comment">// special usage instructions</span>
+  });</code></pre>
+<p><img alt="Electron Simple Theme" src="http://f.cl.ly/items/3z3l162D101e0016320G/electron-simple-theme.png" />
+
+</p>
+<h5>Use Your Own Function</h5>
+<p>You may also provide a function to <code>theme</code> to provide your own output.
+The following example will list all of the commands present in your
+program.
+
+</p>
+<pre><code>program.theme(<span class="function"><span class="keyword">function</span> <span class="params">()</span> {</span>
+  <span class="keyword">this</span>.colorize();
+  console.log(<span class="string">'Usage: %s &lt;command>'</span>, <span class="keyword">this</span>.opts.base);
+  <span class="keyword">this</span>.commands.forEach(functioni (cmd) {
+    console.log(<span class="string">'  %s - %s'</span>, cmd.cmd, cmd.desc);
+  });
+});</code></pre>
+<p>Those interesting in building custom themes should view Electron
+on GitHub and explore
+<a href="https://github.com/logicalparadox/electron/tree/master/lib/electron/themes">lib/electron/themes</a>.
+</p>
+</div>
+        </div>
+        <div id="program_framework-colorize" class="segment">
+          <div class="summary"><h3>.colorize ()</h3>
+</div>
+          <ul class="tags">
+          </ul>
+          <div class="description"><p>The <code>colorize</code> helper is available if you wish you implement
+a colorized but lightweight logging mechanism in your actions,
+or if you are building a custom help theme. <code>colorize</code> works
+by extending <code>String.prototype</code> with a number of color options.
+Just in case, if the current program is not running as a TTY,
+no string changes will be made.
+
+</p>
+<pre><code>console.log(<span class="string">'hello universe'</span>.green);</code></pre>
+<h5>Colors</h5>
+<ul>
+<li>red</li>
+<li>green</li>
+<li>yellow</li>
+<li>blue</li>
+<li>magenta</li>
+<li>cyan</li>
+<li>gray</li>
+</ul>
+</div>
+        </div>
+        <div id="header-constructing_commands" class="segment">
+          <div class="summary"><h2>Constructing Commands</h2>
+</div>
+          <ul class="tags">
+          </ul>
+          <div class="description"><p>Once you have decided to construct a command through <code>program.command</code>
+you will be returned a command object that you can manipulate through
+chainable methods.
+</p>
+</div>
+        </div>
+        <div id="constructing_commands-desc" class="segment">
+          <div class="summary"><h3>.desc (description)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">description</span><span class="desc"></span></li>
+          </ul>
+          <div class="description"><p>Provide a description for this command to be used when
+being display in help.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'hello universe'</span>)
+  .desc(<span class="string">'Say "Hello" to the Universe.'</span>);</code></pre>
+</div>
+        </div>
+        <div id="constructing_commands-option" class="segment">
+          <div class="summary"><h3>.option (opts, description, required)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">options</span><span class="desc">to parse</span></li>
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; String &#125;</span><span class="name">description</span><span class="desc"></span></li>
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; Boolean &#125;</span><span class="name">required.</span><span class="desc">defaults to false</span></li>
+          </ul>
+          <div class="description"><p>You may define any number of options for
+each command. The <code>opts</code> string expects a comma delimited
+list of commands with an optional default value or
+indicator surrounded by brackets. You may
+also provide a description of the option and whether
+it is required.
+
+</p>
+<p>This command may be called multiple times to define multiple
+options.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'build'</span>)
+  .option(<span class="string">'-m, --minify'</span>, <span class="string">'Flag to build minify version'</span>)
+  .option(<span class="string">'-f, --file [build.js]'</span>, <span class="string">'Save filename'</span>, <span class="literal">true</span>);</code></pre>
+</div>
+        </div>
+        <div id="constructing_commands-action" class="segment">
+          <div class="summary"><h3>.action (function)</h3>
+</div>
+          <ul class="tags">
+            <li class="tag"><span class="type">&#64;param</span><span class="types">&#123; Function &#125;</span><span class="name">action</span><span class="desc">to perform</span></li>
+          </ul>
+          <div class="description"><p>Provide the action to be used should this command be
+called. The function will receive one parameter of the
+parsed process.argv object. Multiple calls to <code>action</code> will
+replace the previous defined action.
+
+</p>
+<pre><code>program
+  .command(<span class="string">'build'</span>)
+  .action(<span class="function"><span class="keyword">function</span> <span class="params">(argv)</span> {</span>
+    <span class="keyword">var</span> minify = argv.mode(<span class="string">'m'</span>, <span class="string">'minify'</span>)
+      , file = argv.param(<span class="string">'f'</span>, <span class="string">'file'</span>);
+    <span class="comment">// go!</span>
+  });</code></pre>
+</div>
+        </div>
+      </section>
+      <footer>
+      </footer>
+    </div>
+  </body>
+</html>
