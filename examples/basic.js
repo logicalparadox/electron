@@ -1,10 +1,9 @@
-var electron = require('..');
-
-var program = electron('testing');
+var electron = require('..')
+  , program = electron('node basic.js');
 
 program
   .name('Electron Testing')
-  .version('0.0.1');
+  .version(electron.version);
 
 program
   .command('simple')
@@ -17,5 +16,11 @@ program
     console.log(args.param('p', 'port'));
   });
 
+program
+  .command('absent')
+  .action(function (args) {
+    var cmd = args.commands.join(' ');
+    console.log(cmd + ' is not a valid command. Try --help for a list.');
+  });
 
 program.parse(process.argv);
