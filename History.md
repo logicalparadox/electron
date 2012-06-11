@@ -1,4 +1,34 @@
 
+0.2.0 / 2012-06-10 
+==================
+
+  * sep update drip 0.3.x
+  * docs
+  * comment adjustments for docs
+  * rearrange examples
+  * update examples, change default to use `simple` theme
+  * fix copyright headers
+  * add support for program description
+  * add simple theme and theme comments like what
+  * command comments like what
+  * typos in program comments
+  * comments like what for program
+  * improve support for wildcard events using drip 0.3.0
+  * improve test coverage for wildcard commands
+  * clean theme supports refactored command option parsing
+  * tests for program and command
+  * refactor command option parsing to support default value
+  * program has theme support
+  * examples update to include default and absetn
+  * program support for `default` and `absent` commands
+  * refactor Cli as Program, add istty detection and `useColor` option
+  * Args commented for doc generation
+  * test coverage support
+  * add tests for argv parser
+  * expose `electron.argv` as argv parser factory on module main export
+  * refactor arg parser to user `commands` instead of `args` and filter helper works for all three types
+  * add cli colorize helper
+
 0.1.2 / 2012-05-23 
 ==================
 
