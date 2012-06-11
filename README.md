@@ -2,7 +2,7 @@
 
 # Electron 
 
-> A simple argument-parsing and program framework for [node.js](http://nodejs.org) command-line interfaces.
+> A simple command-line interface framework for [node.js](http://nodejs.org).
 
 #### Features
 
@@ -54,7 +54,7 @@ argv.mode('m', 'minify');    // true
 argv.param('o', 'out');      // 'saved.min.js'
 ```
 
-Recommend reading the "Argument Parsing" section of the 
+Recommend reading the "Argument Parsing Utility" section of the 
 [documentation](http://alogicalpardox.com/electron)
 to learn about the methodologies and specifics of each of the helpers.
 
@@ -105,6 +105,7 @@ program.parse();
 ```
 
 Your `-h, --help` and `-v, --version` will be generated for you automatically.
+
 Recommend reading the "Program Framework" and "Constructing Commands" sections
 of the [documentation](http://alogicalpardox.com/electron)
 to learn about all of the available chainable commands and theming options 
