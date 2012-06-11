@@ -153,7 +153,32 @@ return the value of the first parameter that matches, or
 </div>
           <ul class="tags">
           </ul>
-          <div class="description"></div>
+          <div class="description"><p>The primary export of the electron module is a function
+that composes a new program framework. The returned
+<code>program</code> is a chainable api that allow you to change
+settings, define commands, and start launch the program.
+
+</p>
+<p>The primary argument provided on construction is the base
+name used through the help documentation. In a majority of
+of cases, this would be the command executed from your terminal
+used launch the program.
+
+</p>
+<p>In the case of scripts with the header of <code>#!/usr/bin/env node</code>,
+you should use a variant of the following.
+
+</p>
+<pre><code><span class="keyword">var</span> program = electron(<span class="string">'microscope'</span>);</code></pre>
+<p>If you are however launching your program from a <code>.js</code> file,
+the recommended construction pattern is the following.
+
+</p>
+<pre><code><span class="keyword">var</span> program = electrong(<span class="string">'node microscope.js'</span>);</code></pre>
+<p>You can then chain any of the following commands to further
+define your application and commands.
+</p>
+</div>
         </div>
         <div id="program_framework-command" class="segment">
           <div class="summary"><h3>.command (name)</h3>
@@ -415,7 +440,8 @@ Just in case, if the current program is not running as a TTY,
 no string changes will be made.
 
 </p>
-<pre><code>console.log(<span class="string">'hello universe'</span>.green);</code></pre>
+<pre><code>program.colorize();
+console.log(<span class="string">'hello universe'</span>.green);</code></pre>
 <h5>Colors</h5>
 <ul>
 <li>red</li>
