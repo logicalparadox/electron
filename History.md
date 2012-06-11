@@ -1,4 +1,17 @@
 
+0.2.1 / 2012-06-11 
+==================
+
+  * fix doc asset links
+  * generate docs
+  * comment typos
+  * doc website header
+  * readme
+  * argv export default to using process.argv
+  * added travis support
+  * commentt program header
+  * fix bug that caused error on multiple calls to `program.colorize`
+
 0.2.0 / 2012-06-10 
 ==================
 

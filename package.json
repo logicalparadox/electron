@@ -1,8 +1,11 @@
 {
   "author": "Jake Luer <jake@alogicalparadox.com>",
   "name": "electron",
-  "description": "Event-based tiny CLI famework.",
-  "version": "0.2.0",
+  "description": "A simple command-line interface framework for node.js.",
+  "keywords": [ "cli", "command", "option", "parser", "argv" ],
+  "homepage": "http://alogicalparadox.com/electron",
+  "license": "MIT",
+  "version": "0.2.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/logicalparadox/electron.git"
