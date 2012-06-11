@@ -106,7 +106,7 @@ program.parse();
 
 Your `-h, --help` and `-v, --version` will be generated for you automatically.
 Recommend reading the "Program Framework" and "Constructing Commands" sections
-of this [documentation](http://alogicalpardox.com/electron)
+of the [documentation](http://alogicalpardox.com/electron)
 to learn about all of the available chainable commands and theming options 
 available to construct your programs.
 
