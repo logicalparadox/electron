@@ -12,7 +12,7 @@
     "test": "make test"
   },
   "dependencies": {
-      "drip": "0.2.x"
+      "drip": "0.3.x"
   },
   "devDependencies": {
       "mocha": "*"
