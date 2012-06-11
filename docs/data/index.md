@@ -2,8 +2,6 @@
   title: Electron
 ---
 
-> A simple argument-parsing and program framework for [node.js](http://nodejs.org) command-line interfaces.
-
 #### Features
 
 - reimagined `process.argv` parsing utility
@@ -51,7 +49,7 @@ argv.mode('m', 'minify');    // true
 argv.param('o', 'out');      // 'saved.min.js'
 ```
 
-Recommend reading the "Argument Parsing" section of this documentation
+Recommend reading the "Argument Parsing Utility" section of this documentation
 to learn about the methodologies and specifics of each of the helpers.
 
 #### Your First Program
@@ -101,6 +99,7 @@ program.parse();
 ```
 
 Your `-h, --help` and `-v, --version` will be generated for you automatically.
+
 Recommend reading the "Program Framework" and "Constructing Commands" sections
 of this documentation to learn about all of the available chainable commands
 and theming options available to construct your programs.

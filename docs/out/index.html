@@ -9,13 +9,16 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1>Electron</h1>
+        <h1><a href="#top" class="scroll">Electron</a></h1>
+        <div class="tagline">A simple command-line interface <br>framework for <a href="http://nodejs.org">node.js</a>.</div><a href="https://github.com/logicalparadox/electron" class="fork">
+          <h2>View the Project on GitHub</h2>
+          <div class="project">logicalparadox/electron</div></a>
         <nav>
-          <div id="installation" class="head"> <a href="#header-installation" class="scroll">Installation</a></div>
-          <div id="argument_parsing" class="head"><a href="#header-argument_parsing" class="scroll">Argument Parsing</a></div>
-          <div id="command" class="section argument_parsing"><a href="#argument_parsing-command" class="scroll">command</a></div>
-          <div id="mode" class="section argument_parsing"><a href="#argument_parsing-mode" class="scroll">mode</a></div>
-          <div id="param" class="section argument_parsing"><a href="#argument_parsing-param" class="scroll">param</a></div>
+          <div id="installation" class="head"> <a href="#header-installation" class="scroll">Quick Start</a></div>
+          <div id="argument_parsing_utility" class="head"><a href="#header-argument_parsing_utility" class="scroll">Argument Parsing Utility</a></div>
+          <div id="command" class="section argument_parsing_utility"><a href="#argument_parsing_utility-command" class="scroll">command</a></div>
+          <div id="mode" class="section argument_parsing_utility"><a href="#argument_parsing_utility-mode" class="scroll">mode</a></div>
+          <div id="param" class="section argument_parsing_utility"><a href="#argument_parsing_utility-param" class="scroll">param</a></div>
           <div id="defaults" class="section "><a href="#-defaults" class="scroll">defaults</a></div>
           <div id="program_framework" class="head"><a href="#header-program_framework" class="scroll">Program Framework</a></div>
           <div id="command" class="section program_framework"><a href="#program_framework-command" class="scroll">command</a></div>
@@ -34,25 +37,105 @@
       </header>
       <section id="content">
         <div id="header-installation" class="segment">
-          <div class="description"><blockquote>
-<p>A tiny cli framework for node.js.
-
-</p>
-</blockquote>
-<h2>Features</h2>
+          <div class="para"><a href="#header-installation">&para;</a></div>
+          <div class="description"><h4>Features</h4>
 <ul>
-<li>tbd</li>
+<li>reimagined <code>process.argv</code> parsing utility</li>
+<li>framework for single or multiple command programs</li>
+<li>automatic <code>--help</code> command generation with multiple theming options</li>
+<li>built in cli coloring </li>
+<li>chainable api</li>
 </ul>
-<h2>Installation</h2>
-<h5>Node</h5>
-<p><code>electron</code> package is available through <a href="http://npmjs.org">npm</a>.
+<h2>Quick Start Guide</h2>
+<h4>Installation</h4>
+<p>The <code>electron</code> package is available through <a href="http://npmjs.org">npm</a>. It is recommended
+that you add it to your project&#39;s <code>package.json</code>.
 
 </p>
 <pre><code class="lang-bash">npm install electron</code></pre>
+<h4>Parsing Arguments</h4>
+<p>The argument parsing utility can be used independently of the program
+framework. Just pass the <code>process.argv</code> from any node modules and your
+ready to go.
+
+</p>
+<p>The following command execution...
+
+</p>
+<pre><code class="lang-bash">$ node cli.js build --minify --out saved.min.js</code></pre>
+<p>Could be captured as so...
+
+</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> argv = require(<span class="string">'electron'</span>).argv();
+
+<span class="comment">// objects</span>
+argv.commands;               <span class="comment">// [ 'build' ]</span>
+argv.modes;                  <span class="comment">// [ 'minify' ]</span>
+argv.params;                 <span class="comment">// { out: 'saved.min.js' }</span>
+
+<span class="comment">// helpers</span>
+argv.command(<span class="string">'build'</span>);       <span class="comment">// true</span>
+argv.mode(<span class="string">'m'</span>, <span class="string">'minify'</span>);    <span class="comment">// true</span>
+argv.param(<span class="string">'o'</span>, <span class="string">'out'</span>);      <span class="comment">// 'saved.min.js'</span></code></pre>
+<p>Recommend reading the &quot;Argument Parsing Utility&quot; section of this documentation
+to learn about the methodologies and specifics of each of the helpers.
+
+</p>
+<h4>Your First Program</h4>
+<p>To construct your first program, simply execute the electron export
+with a parameter of the namespace you wish to use for your program.
+Then proceed to define your settings and commands.
+
+</p>
+<pre><code class="lang-javascript"><span class="keyword">var</span> myApp = require(<span class="string">'../lib/myapp'</span>)
+  , program = require(<span class="string">'electron'</span>)(<span class="string">'myapp'</span>);
+
+<span class="comment">/**
+ * Define your program settings
+ */</span>
+
+program
+  .name(<span class="string">'My Cool App'</span>)
+  .desc(<span class="string">'http://docs.mycoolapp.com'</span>)
+  .version(myApp.version);
+
+<span class="comment">/**
+ * Define your first command
+ */</span>
+
+program
+  .command(<span class="string">'build'</span>)
+  .desc(<span class="string">'start a build task'</span>)
+  .option(<span class="string">'-m, --minify'</span>, <span class="string">'flag to set enable minification'</span>)
+  .option(<span class="string">'-o, --out [file.js]'</span>, <span class="string">'name of output file'</span>)
+  .action(<span class="function"><span class="keyword">function</span> <span class="params">(argv)</span> {</span>
+    <span class="keyword">var</span> minify = argv.mode(<span class="string">'m'</span>, <span class="string">'minify'</span>)
+      , savefile = argv.param(<span class="string">'o'</span>, <span class="string">'out'</span>)
+      , cwd = argv.cwd;
+
+   program.colorize();
+   console.log(<span class="string">'Welcome to myApp'</span>.gray + myApp.version);
+   console.log(<span class="string">'It works if it ends with '</span>.gray + <span class="string">'myApp '</span> + <span class="string">'ok'</span>.green);
+   <span class="comment">// etc...</span>
+  });
+
+<span class="comment">/**
+ * Parse argv and execute respective command
+ */</span>
+
+program.parse();</code></pre>
+<p>Your <code>-h, --help</code> and <code>-v, --version</code> will be generated for you automatically.
+
+</p>
+<p>Recommend reading the &quot;Program Framework&quot; and &quot;Constructing Commands&quot; sections
+of this documentation to learn about all of the available chainable commands
+and theming options available to construct your programs.
+</p>
 </div>
         </div>
-        <div id="header-argument_parsing" class="segment">
-          <div class="summary"><h2>Argument Parsing</h2>
+        <div id="header-argument_parsing_utility" class="segment">
+          <div class="para"><a href="#header-argument_parsing_utility">&para;</a></div>
+          <div class="summary"><h2>Argument Parsing Utility</h2>
 </div>
           <ul class="tags">
           </ul>
@@ -74,8 +157,8 @@ to whether a <em>command</em> or <em>mode</em> is present, or the value of a <em
 </p>
 <h5>Commands</h5>
 <p>Commands are the simplest of arguments. They are any arguments
-that are listed to that do not start with the <code>-</code> prefix. Essentially,
-they are a list of keys.
+that are listed to that do not start with the <code>-</code> or <code>--</code> prefix.
+Essentially, they are a list of keys.
 
 </p>
 <pre><code><span class="comment">// $ node cli.js hello universe</span>
@@ -102,7 +185,8 @@ argv.params === {
 };</code></pre>
 </div>
         </div>
-        <div id="argument_parsing-command" class="segment">
+        <div id="argument_parsing_utility-command" class="segment">
+          <div class="para"><a href="#argument_parsing_utility-command">&para;</a></div>
           <div class="summary"><h3>.command (cmd, [cmd], [...])</h3>
 </div>
           <ul class="tags">
@@ -117,7 +201,8 @@ return <code>true</code> if any of them exist in the <em>commands</em> list.
   , world = argv.command(<span class="string">'world'</span>, <span class="string">'earth'</span>); <span class="comment">// false</span></code></pre>
 </div>
         </div>
-        <div id="argument_parsing-mode" class="segment">
+        <div id="argument_parsing_utility-mode" class="segment">
+          <div class="para"><a href="#argument_parsing_utility-mode">&para;</a></div>
           <div class="summary"><h3>.mode (mode, [mode], [...])</h3>
 </div>
           <ul class="tags">
@@ -132,7 +217,8 @@ return <code>true</code> if any of them exist in the <em>modes</em> list.
   , world = argv.mode(<span class="string">'w'</span>, <span class="string">'world'</span>); <span class="comment">// false</span></code></pre>
 </div>
         </div>
-        <div id="argument_parsing-param" class="segment">
+        <div id="argument_parsing_utility-param" class="segment">
+          <div class="para"><a href="#argument_parsing_utility-param">&para;</a></div>
           <div class="summary"><h3>.param (param, [param], [...])</h3>
 </div>
           <ul class="tags">
@@ -149,6 +235,7 @@ return the value of the first parameter that matches, or
 </div>
         </div>
         <div id="header-program_framework" class="segment">
+          <div class="para"><a href="#header-program_framework">&para;</a></div>
           <div class="summary"><h2>Program Framework</h2>
 </div>
           <ul class="tags">
@@ -181,6 +268,7 @@ define your application and commands.
 </div>
         </div>
         <div id="program_framework-command" class="segment">
+          <div class="para"><a href="#program_framework-command">&para;</a></div>
           <div class="summary"><h3>.command (name)</h3>
 </div>
           <ul class="tags">
@@ -282,6 +370,7 @@ program
 </div>
         </div>
         <div id="program_framework-parse" class="segment">
+          <div class="para"><a href="#program_framework-parse">&para;</a></div>
           <div class="summary"><h3>.parse (process.argv)</h3>
 </div>
           <ul class="tags">
@@ -306,6 +395,7 @@ These will be discarded.
 </div>
         </div>
         <div id="program_framework-name" class="segment">
+          <div class="para"><a href="#program_framework-name">&para;</a></div>
           <div class="summary"><h3>.name (name)</h3>
 </div>
           <ul class="tags">
@@ -320,6 +410,7 @@ for chaining.
 </div>
         </div>
         <div id="program_framework-version" class="segment">
+          <div class="para"><a href="#program_framework-version">&para;</a></div>
           <div class="summary"><h3>.version (version)</h3>
 </div>
           <ul class="tags">
@@ -334,6 +425,7 @@ for chaining.
 </div>
         </div>
         <div id="program_framework-desc" class="segment">
+          <div class="para"><a href="#program_framework-desc">&para;</a></div>
           <div class="summary"><h3>.desc (description)</h3>
 </div>
           <ul class="tags">
@@ -348,6 +440,7 @@ for chaining.
 </div>
         </div>
         <div id="program_framework-cwd" class="segment">
+          <div class="para"><a href="#program_framework-cwd">&para;</a></div>
           <div class="summary"><h3>.cwd (fqp)</h3>
 </div>
           <ul class="tags">
@@ -371,6 +464,7 @@ program
 </div>
         </div>
         <div id="program_framework-theme" class="segment">
+          <div class="para"><a href="#program_framework-theme">&para;</a></div>
           <div class="summary"><h3>.theme (theme, specifications)</h3>
 </div>
           <ul class="tags">
@@ -428,6 +522,7 @@ on GitHub and explore
 </div>
         </div>
         <div id="program_framework-colorize" class="segment">
+          <div class="para"><a href="#program_framework-colorize">&para;</a></div>
           <div class="summary"><h3>.colorize ()</h3>
 </div>
           <ul class="tags">
@@ -455,6 +550,7 @@ console.log(<span class="string">'hello universe'</span>.green);</code></pre>
 </div>
         </div>
         <div id="header-constructing_commands" class="segment">
+          <div class="para"><a href="#header-constructing_commands">&para;</a></div>
           <div class="summary"><h2>Constructing Commands</h2>
 </div>
           <ul class="tags">
@@ -466,6 +562,7 @@ chainable methods.
 </div>
         </div>
         <div id="constructing_commands-desc" class="segment">
+          <div class="para"><a href="#constructing_commands-desc">&para;</a></div>
           <div class="summary"><h3>.desc (description)</h3>
 </div>
           <ul class="tags">
@@ -481,6 +578,7 @@ being display in help.
 </div>
         </div>
         <div id="constructing_commands-option" class="segment">
+          <div class="para"><a href="#constructing_commands-option">&para;</a></div>
           <div class="summary"><h3>.option (opts, description, required)</h3>
 </div>
           <ul class="tags">
@@ -507,6 +605,7 @@ options.
 </div>
         </div>
         <div id="constructing_commands-action" class="segment">
+          <div class="para"><a href="#constructing_commands-action">&para;</a></div>
           <div class="summary"><h3>.action (function)</h3>
 </div>
           <ul class="tags">

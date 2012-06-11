@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300italic,700italic,300,700);
-@import url(http://fonts.googleapis.com/css?family=Oxygen);
+@import url(https://fonts.googleapis.com/css?family=Oxygen);
 
 @import 'nib'
 @import 'fez'
@@ -7,31 +7,63 @@
 global-reset()
 fez-reset()
 
+electrorange = #E78427
+
 body
   font 14px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif
   font-weight 300
   padding 50px
-  color #777
+  background-color #F1F1F0
+  color #292929
 
 h1, h2
-  font-family Oxygen, Lato, "Helvetica Neue", Helvetica, Arial, sans-serif 
+  font-family 'Oxygen', sans-serif 
+  color #696866
+  a
+    color #696866
 
 h2
   margin-top 30px
   padding-bottom 10px
   border-bottom 1px solid #ccc
 
-h1, h2, h4, h5, h6
-  color #222
+h3, h4, h5, h6
+  color #696866
   font-weight bold
 
-h3
-  color #39C
-
 a
-  color #cc3300
+  color electrorange
   text-decoration none
 
+a.fork
+  display block
+  background linear-gradient(top ,lighten(electrorange, 10%), electrorange)
+  box-shadow 1px 1px 5px rgba(0,0,0,30%)
+  border 1px solid darken(electrorange, 20%)
+  color #fff
+  margin-top 30px
+  margin-bottom 30px
+  padding 10px
+  border-radius 5px
+  text-shadow 1px 1px 0px darken(electrorange, 30%)
+
+  &:hover
+    background linear-gradient(top ,lighten(electrorange, 20%), lighten(electrorange, 10%))
+
+  h2
+    border-bottom 0px
+    margin 0px
+    color #fff
+    padding 0px
+  .project
+    font-size 16px
+
+em
+  font-style italic
+
+strong
+  font-weight bold
+  
 code, pre
   font-family Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
   color #333;
@@ -52,6 +84,17 @@ pre
 
 .segment
   margin-bottom 60px 
+  position relative
+
+  .para
+    position absolute
+    left -20px
+    font-size 14px
+    width 20px
+    display none
+    opacity 0
+    a
+      color #292929
 
 ul.tags
   font-size 12px
@@ -75,6 +118,7 @@ header
 
 section#content
   width 500px
+  padding-top 65px
   float right
 
 nav
@@ -89,7 +133,7 @@ nav
   .head > a
     color #222
   .section > a
-    color #39C
+    color darken(electrorange, 30%)
 
 footer
   width 270px
