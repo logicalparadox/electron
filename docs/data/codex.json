@@ -1,6 +1,11 @@
 {
     "locals": {
-      "title": "Electron"
+        "title": "Electron"
+      , "googleanalytics": "UA-26183904-7"
+      , "mixpanel": ""
+      , "ghuser": "logicalparadox"
+      , "ghbaseurl": "/electron"
+      , "ghproject": "electron"
     }
 
   , "plugins": [
