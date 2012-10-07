@@ -95,6 +95,18 @@ describe('argv parsing', function () {
       should.not.exist(argv.param('bye', 'b'));
     });
 
+    it('can parse a multiword string', function () {
+      var subject = 'node test.js --subject "hello universe" -h "are you"'.split(' ')
+        , argv = electron.argv(subject);
+
+      argv.params.should.be.an('object');
+      argv.params.should.have.keys('subject', 'h');
+
+      argv.should.respondTo('param');
+      argv.param('subject').should.equal('hello universe');
+      argv.param('h').should.equal('are you');
+    });
+
   });
 
   describe('commands', function () {
