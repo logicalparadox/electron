@@ -1,4 +1,10 @@
 
+0.3.0 / 2012-10-07 
+==================
+
+  * update comments to reflect multiword params
+  * add support for multiword argv paramters and tests
+
 0.2.1 / 2012-06-11 
 ==================
 
