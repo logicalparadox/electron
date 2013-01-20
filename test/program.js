@@ -115,7 +115,7 @@ describe('program', function () {
       cmd.should.have.deep.property('opts.cmd', 'universe');
       cmd.should.have.deep.property('opts.desc', '');
       cmd.should.have.deep.property('opts.options')
-        .an('array').with.length(0)
+        .an('array').with.lengthOf(0)
       cmd.should.have.deep.property('opts.action')
         .a('function');
     });
@@ -137,7 +137,7 @@ describe('program', function () {
       var chain = cmd.option('-p, --port [6000]', 'Provide a port');
       chain.should.deep.equal(cmd);
       cmd.should.have.deep.property('opts.options')
-        .an('array').with.length(1);
+        .an('array').with.lengthOf(1);
 
       var opt1 = cmd.opts.options[0]
       opt1.should.have.property('desc')
@@ -145,21 +145,21 @@ describe('program', function () {
       opt1.should.have.property('required', false);
       opt1.should.have.property('opts')
         .an('object').with.property('flags')
-          .an('array').with.length(2)
+          .an('array').with.lengthOf(2)
           .and.include('p', 'port');
       opt1.opts.should.have.property('def')
         .a('string', '6000');
 
       cmd.option('-h, --host', 'Provide a host', true);
       cmd.should.have.deep.property('opts.options')
-        .an('array').with.length(2);
+        .an('array').with.lengthOf(2);
 
       var opt2 = cmd.opts.options[1]
       opt2.should.have.property('desc')
         .a('string', 'Provide a host');
       opt2.should.have.property('opts')
         .an('object').with.property('flags')
-          .an('array').with.length(2)
+          .an('array').with.lengthOf(2)
           .and.include('h', 'host');
       opt2.opts.should.have.property('def', null);
       opt2.should.have.property('required', true);
