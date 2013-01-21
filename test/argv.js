@@ -1,12 +1,5 @@
-var chai = require('chai')
-  , should = chai.should();
-
-var electron = require('..');
-
 describe('argv parsing', function () {
-
   describe('modes', function () {
-
     it('can parse long form modes', function () {
       var subject = 'node test.js --subject --noun'.split(' ')
         , argv = electron.argv(subject);
@@ -44,11 +37,9 @@ describe('argv parsing', function () {
       argv.mode('noun', 'n').should.be.true;
       argv.mode('verb', 'v').should.be.false;
     });
-
   });
 
   describe('params', function () {
-
     it('can parse long form `=` params', function () {
       var subject = 'node test.js --hello=universe'.split(' ')
         , argv = electron.argv(subject);
@@ -106,11 +97,9 @@ describe('argv parsing', function () {
       argv.param('subject').should.equal('hello universe');
       argv.param('h').should.equal('are you');
     });
-
   });
 
   describe('commands', function () {
-
     it('can parse single commands', function () {
       var subject = 'node test.js hello'.split(' ')
         , argv = electron.argv(subject);
@@ -142,7 +131,6 @@ describe('argv parsing', function () {
   });
 
   describe('mixed', function () {
-
     it('can parse sane mixed set of args', function () {
       var subject = 'node test.js command subcommand -rgb --hello universe --say=goodday'.split(' ')
         , argv = electron.argv(subject);
@@ -193,6 +181,5 @@ describe('argv parsing', function () {
       argv.params.should.be.an('object')
         .and.deep.equal({ hello: 'universe', say: 'goodday' });
     });
-
   });
 });

@@ -1,27 +1,9 @@
-var chai = require('chai')
-  , chaiSpies = require('chai-spies')
-  , should = chai.should();
-
-chai.use(chaiSpies);
-
-var electron = require('..')
-  , isCov = process.env.ELECTRON_COV
-    ? true
-    : false
-  , Program = isCov
-    ? require('../lib-cov/electron/program')
-    : require('../lib/electron/program')
-  , Command = isCov
-    ? require('../lib-cov/electron/command')
-    : require('../lib/electron/command')
-  , Args = isCov
-    ? require('../lib-cov/electron/args')
-    : require('../lib/electron/args');
-
 describe('program', function () {
+  var Args = __electron.Args
+    , Command = __electron.Command
+    , Program = __electron.Program;
 
   describe('factory', function () {
-
     it('can return a program without using options', function () {
       var program = electron();
       program.should.be.instanceof(Program);
@@ -34,11 +16,9 @@ describe('program', function () {
       program.should.have.deep.property('opts.name', 'Testing');
       program.should.have.deep.property('opts.theme.name', 'clean');
     });
-
   });
 
   describe('option helpers', function () {
-
     it('can modify the name', function () {
       var program = electron('test', { name: 'Hello' });
       program.should.be.instanceof(Program);
@@ -71,7 +51,6 @@ describe('program', function () {
     });
 
     describe('theme', function () {
-
       it('can use a theme object', function () {
         var program = electron('test');
         program.should.be.instanceof(Program);
@@ -99,9 +78,7 @@ describe('program', function () {
         chain.should.deep.equal(program);
         program.should.have.deep.property('opts.theme', theme);
       });
-
     });
-
   });
 
   describe('commands', function () {
@@ -171,11 +148,9 @@ describe('program', function () {
       cmd.action(action);
       cmd.should.have.deep.property('opts.action', action);
     });
-
   });
 
   describe('parsing', function () {
-
     it('can use a default command', function () {
       var program = electron('test')
         , spy = chai.spy(function (args) {
@@ -236,11 +211,9 @@ describe('program', function () {
       program.parse(subject);
       spy.should.have.been.called.once;
     });
-
   });
 
   describe('help', function () {
-
     it('can use a custom help function', function () {
       var program = electron('test')
         , theme = chai.spy(function () {
@@ -254,7 +227,5 @@ describe('program', function () {
       program.parse(subject);
       theme.should.have.been.called.once;
     });
-
   });
-
 });
