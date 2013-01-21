@@ -1,4 +1,12 @@
 
+0.4.0 / 2013-01-21 
+==================
+
+  * test: add and use bootstrap for common testing env
+  * deps: update drip to 1.1.x
+  * Merge pull request #1 from jasonrm/test-fix
+  * Fix failing tests due to incorrect usage of length/lengthOf with Chai.
+
 0.3.0 / 2012-10-07 
 ==================
 

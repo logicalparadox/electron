@@ -1,6 +1,7 @@
 .git*
 docs/
 support/
+examples/
 test/
 .DS_Store
 coverage.html
