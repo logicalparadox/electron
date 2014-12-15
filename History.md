@@ -1,4 +1,12 @@
 
+0.4.1 / 2014-12-15
+==================
+
+  * Merge pull request #7 from RobertWHurst/patch-1
+  * Fix broken output in non TTY mode
+  * Merge pull request #6 from tunnckoCore/patch-1
+  * closes #4, rename displayHelp to showHelp
+
 0.4.0 / 2013-01-21 
 ==================
 
