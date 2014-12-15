@@ -1,5 +1,10 @@
 
-0.4.0 / 2013-01-21 
+0.4.1 / 2013-11-23
+==================
+
+  * Add a new feature to use displayHelp on program scope with program.showHelp()
+
+0.4.0 / 2013-01-21
 ==================
 
   * test: add and use bootstrap for common testing env
@@ -7,13 +12,13 @@
   * Merge pull request #1 from jasonrm/test-fix
   * Fix failing tests due to incorrect usage of length/lengthOf with Chai.
 
-0.3.0 / 2012-10-07 
+0.3.0 / 2012-10-07
 ==================
 
   * update comments to reflect multiword params
   * add support for multiword argv paramters and tests
 
-0.2.1 / 2012-06-11 
+0.2.1 / 2012-06-11
 ==================
 
   * fix doc asset links
@@ -26,7 +31,7 @@
   * commentt program header
   * fix bug that caused error on multiple calls to `program.colorize`
 
-0.2.0 / 2012-06-10 
+0.2.0 / 2012-06-10
 ==================
 
   * sep update drip 0.3.x
@@ -56,19 +61,19 @@
   * refactor arg parser to user `commands` instead of `args` and filter helper works for all three types
   * add cli colorize helper
 
-0.1.2 / 2012-05-23 
+0.1.2 / 2012-05-23
 ==================
 
   * refactor parse to return `this`
 
-0.1.1 / 2012-05-22 
+0.1.1 / 2012-05-22
 ==================
 
   * parse args now moved to Args constructor
   * example update
   * argument lookups
 
-0.1.0 / 2012-05-18 
+0.1.0 / 2012-05-18
 ==================
 
   * example
